@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apakah kamu mencintaiku? ❤️</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #ffebeb;
+            padding: 20px;
+            transition: background 0.5s;
+        }
+        h1 {
+            color: #ff3366;
+            font-size: 36px;
+            text-shadow: 2px 2px 5px #ff99aa;
+        }
+        #response, #noResponse {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px;
+            color: #ff0000;
+            transition: opacity 0.5s;
+        }
+        .buttons {
+            margin-top: 20px;
+            position: relative;
+            height: 150px;
+        }
+        button {
+            font-size: 22px;
+            padding: 12px 24px;
+            background-color: #ff3366;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            position: absolute;
+            transition: transform 0.3s, left 0.3s, top 0.3s, font-size 0.3s;
+        }
+        button:hover {
+            background-color: #cc0052;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="question">Apakah kamu mencintaiku? ❤️</h1>
+
+    <div class="buttons" id="loveButtons">
+        <button onclick="loveResponse()" id="yesBtn" style="left: 10%;">Ya</button>
+        <button onmouseover="runAway()" onclick="confuseHer()" id="noBtn" style="right: 10%;">Tidak</button>
+    </div>
+
+    <p id="response"></p>
+    <p id="noResponse"></p>
+
+    <audio id="loveMusic" src="https://www.bensound.com/bensound-music/bensound-love.mp3"></audio>
+    <audio id="sadMusic" src="https://www.bensound.com/bensound-music/bensound-sad.mp3"></audio>
+
+    <script>
+        let noClickCount = 0;
+
+        function loveResponse() {
+            let messages = [
+                "Yay! Aku juga mencintaimu ❤️😍",
+                "Akhirnya! Aku tahu kamu mencintaiku! 😘",
+                "Keputusan terbaik! Mari bahagia bersama 💕"
+            ];
+
+            let afterMessages = [
+                "Kamu adalah duniaku sekarang! 🌍❤️",
+                "Ini hari terbaik dalam hidupku! 🥰",
+                "Aku janji akan mencintaimu selamanya! 💖"
+            ];
+
+            let responseText = document.getElementById("response");
+            let noBtn = document.getElementById("noBtn");
+            let loveMusic = document.getElementById("loveMusic");
+            let sadMusic = document.getElementById("sadMusic");
+
+            responseText.innerText = messages[Math.floor(Math.random() * messages.length)];
+            noBtn.style.display = "none"; 
+            loveMusic.play();
+            sadMusic.pause();
+            sadMusic.currentTime = 0;
+
+            document.body.style.backgroundColor = "#ffccdd";
+
+            setTimeout(() => {
+                responseText.innerText = afterMessages[Math.floor(Math.random() * afterMessages.length)];
+            }, 3000);
+        }
+
+        function runAway() {
+            let noBtn = document.getElementById("noBtn");
+            let maxWidth = window.innerWidth - 150;
+            let maxHeight = window.innerHeight - 150;
+
+            let randomX = Math.floor(Math.random() * maxWidth);
+            let randomY = Math.floor(Math.random() * maxHeight);
+
+            noBtn.style.left = randomX + "px";
+            noBtn.style.top = randomY + "px";
+        }
+
+        function confuseHer() {
+            let messages = [
+                "Apa kamu yakin? 🤔",
+                "Tunggu... Pikirkan lagi! 🤨",
+                "Tidak? Tapi kenapa? 🥺",
+                "Mungkin kamu salah tekan? 😏",
+                "Aku kasih kesempatan lagi! 😘",
+                "Kamu tahu kamu ingin bilang Ya! 💖",
+                "Apa kamu BENAR-BENAR yakin? 😳",
+                "Jangan hancurkan hatiku 💔",
+                "Kamu akan menyesal nanti... 😏",
+                "Aku percaya padamu! Bilang Ya! ✨"
+            ];
+
+            let noMessages = [
+                "Cinta itu indah, kenapa ragu? 💕",
+                "Hatiku hanya untukmu... Jangan tolak aku 😢",
+                "Jangan buat aku sedih... Aku menunggumu! 🥺",
+                "Aku janji akan selalu ada untukmu! 🌹",
+                "Kita bisa bahagia bersama, ayo bilang Ya! 😍",
+                "Aku tahu kamu mencintaiku... Jangan bohong! 😘",
+                "Setiap kisah cinta dimulai dengan Ya! ✨",
+                "Hatiku akan patah kalau kamu menolak... 💔",
+                "Pikirkan masa depan kita bersama! ❤️",
+                "Aku tidak akan menyerah! Aku akan menunggumu! 💖"
+            ];
+
+            let responseText = document.getElementById("response");
+            let noResponseText = document.getElementById("noResponse");
+            let noBtn = document.getElementById("noBtn");
+            let loveMusic = document.getElementById("loveMusic");
+            let sadMusic = document.getElementById("sadMusic");
+
+            if (noClickCount < 10) {
+                responseText.innerText = messages[noClickCount % messages.length];
+                noResponseText.innerText = noMessages[noClickCount % noMessages.length];
+
+                noBtn.style.fontSize = (22 - noClickCount * 2) + "px"; 
+                noBtn.style.padding = (12 - noClickCount) + "px"; 
+                sadMusic.play();
+                loveMusic.pause();
+                loveMusic.currentTime = 0;
+            }
+
+            noClickCount++;
+
+            if (noClickCount >= 10) {
+                noBtn.style.display = "none"; 
+                responseText.innerText = "";
+                noResponseText.innerText = "";
+                sadMusic.pause();
+            }
+        }
+    </script>
+
+</body>
+</html>
